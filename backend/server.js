@@ -13,7 +13,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-const mongoURI = 'mongodb://localhost:27017/Quiz';
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/Quiz';
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -27,6 +27,10 @@ app.use('/login', loginRoute);
 app.use('/signup', signupRoute);
 app.use('/leaderboard', leaderboardRoutes); 
 
+app.get('/', (req, res) => {
+  res.json({ message: 'Devil Comes' })
+  console.log('Devil Comes')
+})
 
 app.listen(5000, () => {
     console.log('Server is running on port 5000');
