@@ -2,7 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const fs = require('fs');
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcryptjs"); // Change from 'bcrypt'
 const users = require('../Users/users');
 require('dotenv').config();
 const usersFilePath = './Users/users.json';
