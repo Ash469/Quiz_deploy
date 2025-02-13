@@ -13,7 +13,7 @@ const navigate = useNavigate();
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    const apiUrl = 'http://localhost:5000/login';
+    const apiUrl = 'https://quiz-deploy-2jti.onrender.com/login';
 
     try {
       const response = await fetch(apiUrl, {

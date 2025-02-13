@@ -11,8 +11,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const baseURL = process.env.NODE_ENV === "production" ? "https://technothlon.techniche.org.in/api/" : "http://localhost:3001/api/";
-    const redirectUrl = process.env.NODE_ENV === "production" ? "https://technothlon.techniche.org.in/userportal" : "http://localhost:3000/userportal";
+    const baseURL = process.env.NODE_ENV === "production" ? "https://quiz-deploy-2jti.onrender.com/" : "http://localhost:3001/api/";
+    const redirectUrl = process.env.NODE_ENV === "production" ? "https://quiz-deploy-2jti.onrender.com/" : "http://localhost:3000/userportal";
     const [roll, setRoll] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');

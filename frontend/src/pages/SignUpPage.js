@@ -23,7 +23,7 @@ const SignupPage = () => {
       return;
     }
 
-    const apiUrl = 'http://localhost:5000/signup'; 
+    const apiUrl = 'https://quiz-deploy-2jti.onrender.com/signup'; 
 
     try {
       const response = await fetch(apiUrl, {

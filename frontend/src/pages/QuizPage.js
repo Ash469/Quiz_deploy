@@ -56,7 +56,7 @@ const QuizPage = () => {
         try {
             const token = localStorage.getItem('jwtToken');
             console.log("Token:", token);
-            const response = await axios.post('http://localhost:5000/leaderboard', { score }, {
+            const response = await axios.post('https://quiz-deploy-2jti.onrender.com/leaderboard', { score }, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
