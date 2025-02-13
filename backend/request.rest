@@ -1,0 +1,7 @@
+POST http://localhost:5000/leaderboard
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzaHNoYW5kaWx5YTEyQGdtYWlsLmNvbSIsImlhdCI6MTczMDExNDY5MH0.effMIvTbuI-9nQ0eAR8PSZFh_AE22CItedOamqE8jeE
+
+{
+  "score": 7
+}

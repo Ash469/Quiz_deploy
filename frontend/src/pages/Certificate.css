@@ -1,0 +1,57 @@
+.certificate-background {
+  background-image: url("certificate.jpg"); /* Ensure path is correct */
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 60%;
+  margin-top: 5%;
+  padding-top: 30%;
+  padding-left: 20%;
+  position: relative;
+}
+
+.certificate-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.certificate-text {
+  position: absolute;
+  top: 43%; /* Adjust to the correct Y position of the name */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%; /* Adjust as per your certificate design */
+  text-align: center;
+  font-size: clamp(16px, 3vw, 28px);
+  font-weight: bold;
+  color: #000; 
+}
+
+.h2 {
+  font-size: clamp(12px, 4vw, 20px);
+  font-weight: bold;
+  text-underline-offset: 0.3em;
+  word-break: break-word;
+  font-size: 32px;
+  color: #333;
+  margin-bottom: -10px;
+}
+
+.h3 {
+  font-size: clamp(12px, 4vw, 20px);
+  margin-top: 2%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .h2 {
+    font-size: clamp(12px, 4vw, 20px);
+  }
+
+  .h3 {
+    font-size: clamp(12px, 4vw, 20px);
+  }
+}
