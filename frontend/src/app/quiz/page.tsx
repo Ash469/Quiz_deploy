@@ -15,12 +15,6 @@ interface Question {
 
 type UserAnswers = Record<number, string>;
 
-const calculateScore = (questions: Question[], userAnswers: string[]): number => {
-    return questions.reduce((score, question, index) => {
-        return score + (question.answer === userAnswers[index] ? 1 : 0);
-    }, 0);
-};
-
 const QuizPage: React.FC = () => {
     const [questions, setQuestions] = useState<Question[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -28,8 +22,9 @@ const QuizPage: React.FC = () => {
     const [timeRemaining, setTimeRemaining] = useState(300);
     const router = useRouter();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleFinalSubmit = useCallback(async () => {
-        const score = calculateScore(questions, Object.values(userAnswers));
+        const score = calculateScore();
         console.log('Score:', score);
 
         const quizResult = {
@@ -64,7 +59,7 @@ const QuizPage: React.FC = () => {
         }
 
         router.push('/result');
-    }, [questions, userAnswers, router]);
+    });
 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -95,6 +90,13 @@ const QuizPage: React.FC = () => {
 
     const handleAnswerChange = (answer: string) => {
         setUserAnswers((prev) => ({ ...prev, [currentQuestion]: answer }));
+    };
+
+    const calculateScore = () => {
+        return questions.reduce((score, question, index) => {
+            const userAnswer = userAnswers[index];
+            return userAnswer === question.answer ? score + 3 : userAnswer ? score - 1 : score;
+        }, 0);
     };
 
     if (questions.length === 0) return <div>Questions Loading...</div>;

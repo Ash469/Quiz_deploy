@@ -9,7 +9,12 @@ require('dotenv').config();
 
 const app = express();
 app.use(express.json()); 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://quiz-deploy-1.onrender.com/", // Allow only your frontend
+    credentials: true,
+  })
+);
 app.use(bodyParser.json());
 
 // Connect to MongoDB
