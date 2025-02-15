@@ -24,7 +24,8 @@ const StartQuizPage: React.FC = () => {
             const selectedQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 10);
             localStorage.setItem('questions', JSON.stringify(selectedQuestions));
             router.push('/quiz');
-        } catch (err) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (error) {
             setError('Failed to load questions. Please try again later.');
         } finally {
             setLoading(false);

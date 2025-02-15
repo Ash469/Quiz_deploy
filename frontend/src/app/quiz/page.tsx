@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import '../../styles/Quiz.css';
 
@@ -15,6 +15,12 @@ interface Question {
 
 type UserAnswers = Record<number, string>;
 
+const calculateScore = (questions: Question[], userAnswers: string[]): number => {
+    return questions.reduce((score, question, index) => {
+        return score + (question.answer === userAnswers[index] ? 1 : 0);
+    }, 0);
+};
+
 const QuizPage: React.FC = () => {
     const [questions, setQuestions] = useState<Question[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -22,46 +28,8 @@ const QuizPage: React.FC = () => {
     const [timeRemaining, setTimeRemaining] = useState(300);
     const router = useRouter();
 
-    useEffect(() => {
-        const fetchQuestions = async () => {
-            try {
-                const response = await fetch('https://krish-2512.github.io/api/questions-2.json');
-                if (!response.ok) throw new Error('Failed to fetch questions');
-                const data: Question[] = await response.json();
-                setQuestions(data.sort(() => 0.5 - Math.random()).slice(0, 10));
-            } catch (err) {
-                console.error('Error loading questions:', err);
-            }
-        };
-
-        fetchQuestions();
-    }, []);
-
-    useEffect(() => {
-        if (timeRemaining <= 0) {
-            handleFinalSubmit();
-        }
-
-        const timerId = setInterval(() => {
-            setTimeRemaining((prev) => prev - 1);
-        }, 1000);
-
-        return () => clearInterval(timerId);
-    }, [timeRemaining]);
-
-    const handleAnswerChange = (answer: string) => {
-        setUserAnswers((prev) => ({ ...prev, [currentQuestion]: answer }));
-    };
-
-    const calculateScore = () => {
-        return questions.reduce((score, question, index) => {
-            const userAnswer = userAnswers[index];
-            return userAnswer === question.answer ? score + 3 : userAnswer ? score - 1 : score;
-        }, 0);
-    };
-
-    const handleFinalSubmit = async () => {
-        const score = calculateScore();
+    const handleFinalSubmit = useCallback(async () => {
+        const score = calculateScore(questions, Object.values(userAnswers));
         console.log('Score:', score);
 
         const quizResult = {
@@ -96,6 +64,37 @@ const QuizPage: React.FC = () => {
         }
 
         router.push('/result');
+    }, [questions, userAnswers, router]);
+
+    useEffect(() => {
+        const fetchQuestions = async () => {
+            try {
+                const response = await fetch('https://krish-2512.github.io/api/questions-2.json');
+                if (!response.ok) throw new Error('Failed to fetch questions');
+                const data: Question[] = await response.json();
+                setQuestions(data.sort(() => 0.5 - Math.random()).slice(0, 10));
+            } catch (err) {
+                console.error('Error loading questions:', err);
+            }
+        };
+
+        fetchQuestions();
+    }, []);
+
+    useEffect(() => {
+        if (timeRemaining <= 0) {
+            handleFinalSubmit();
+        }
+
+        const timerId = setInterval(() => {
+            setTimeRemaining((prev) => prev - 1);
+        }, 1000);
+
+        return () => clearInterval(timerId);
+    }, [timeRemaining, handleFinalSubmit]);
+
+    const handleAnswerChange = (answer: string) => {
+        setUserAnswers((prev) => ({ ...prev, [currentQuestion]: answer }));
     };
 
     if (questions.length === 0) return <div>Questions Loading...</div>;
