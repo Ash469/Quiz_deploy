@@ -11,8 +11,8 @@ const app = express();
 app.use(express.json()); 
 app.use(
   cors({
-    origin: "https://quiz-deploy-1.onrender.com", // Allow only your frontend
-    credentials: true,
+    origin: "*", // Allows all origins
+    credentials: true, // If you need to allow credentials, use a specific origin instead of "*"
   })
 );
 app.use(bodyParser.json());
